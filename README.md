@@ -1,34 +1,39 @@
-## Usage
+# Install tailwind postcss & autoprefixer
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+`pnpm install -D tailwindcss@latest postcss@latest autoprefixer@latest`
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+# Generate our tailwind.config.js and postcss.config.js
 
-```bash
-$ npm install # or pnpm install or yarn install
+`npx tailwindcss init -p`
+
+# tailwind.config.js should look like this:
+
+```
+module.exports = {
+    purge: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+        extend: {},
+    },
+    variants: {
+        extend: {},
+    },
+    plugins: [],
+}
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+# bring tailwind directives in
 
-## Available Scripts
+/_ index.css _/ @tailwind base; @tailwind components; @tailwind utilities;
 
-In the project directory, you can run:
+# Import tailwind styles at the root
 
-### `npm dev` or `npm start`
+```
+import { render } from "solid-js/web";
+import "tailwindcss/tailwind.css";
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+import "./index.css";
+import App from "./App";
+render(App, document.getElementById("root"));
 
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+```
